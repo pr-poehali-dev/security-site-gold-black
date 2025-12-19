@@ -35,6 +35,21 @@ const Index = () => {
     "contact-phone": "+7 (495) 123-45-67",
     "contact-email": "info@security.com",
     "contact-address": "Москва, ул. Примерная, д. 1",
+    "portfolio-1-img": "",
+    "portfolio-1-title": "Проект 1",
+    "portfolio-1-desc": "Успешная реализация комплексной системы безопасности",
+    "portfolio-2-img": "",
+    "portfolio-2-title": "Проект 2",
+    "portfolio-2-desc": "Успешная реализация комплексной системы безопасности",
+    "portfolio-3-img": "",
+    "portfolio-3-title": "Проект 3",
+    "portfolio-3-desc": "Успешная реализация комплексной системы безопасности",
+    "case-1-img": "",
+    "case-1-title": "Кейс 1",
+    "case-1-desc": "Подробное описание успешного проекта по обеспечению безопасности крупного предприятия. Реализация комплексной системы защиты информации и контроля доступа.",
+    "case-2-img": "",
+    "case-2-title": "Кейс 2",
+    "case-2-desc": "Подробное описание успешного проекта по обеспечению безопасности крупного предприятия. Реализация комплексной системы защиты информации и контроля доступа.",
   });
 
   const services = [
@@ -178,6 +193,47 @@ const Index = () => {
     );
   };
 
+  const EditableImage = ({ id, className = "" }: { id: string; className?: string }) => {
+    const imgSrc = content[id];
+    const fileInputRef = useState<HTMLInputElement | null>(null)[0];
+
+    const handleImageClick = () => {
+      if (isAdminMode) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e: any) => {
+          const file = e.target?.files?.[0];
+          if (file) {
+            handleImageUpload(id, file);
+            toast.success("Изображение загружено");
+          }
+        };
+        input.click();
+      }
+    };
+
+    return (
+      <div className={`relative group ${className} cursor-pointer`} onClick={handleImageClick}>
+        {imgSrc ? (
+          <img src={imgSrc} alt="Uploaded" className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center">
+            <Icon name="Image" size={64} className="text-primary/40" />
+          </div>
+        )}
+        {isAdminMode && (
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <div className="text-center text-white">
+              <Icon name="Upload" size={32} className="mx-auto mb-2" />
+              <p className="text-sm font-medium">Загрузить изображение</p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-primary/20 z-50">
@@ -295,12 +351,16 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
               <Card key={i} className="overflow-hidden bg-card border-primary/20 hover-scale">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center">
-                  <Icon name="Briefcase" size={64} className="text-primary/40" />
+                <div className="h-48 overflow-hidden">
+                  <EditableImage id={`portfolio-${i}-img`} className="h-full" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-montserrat font-semibold mb-2 text-primary">Проект {i}</h3>
-                  <p className="text-foreground/80">Успешная реализация комплексной системы безопасности</p>
+                  <h3 className="text-xl font-montserrat font-semibold mb-2 text-primary">
+                    <EditableText id={`portfolio-${i}-title`} />
+                  </h3>
+                  <p className="text-foreground/80">
+                    <EditableText id={`portfolio-${i}-desc`} />
+                  </p>
                 </div>
               </Card>
             ))}
@@ -315,16 +375,22 @@ const Index = () => {
           </h2>
           <div className="max-w-4xl mx-auto space-y-6">
             {[1, 2].map((i) => (
-              <Card key={i} className="p-8 bg-card border-primary/20 gold-glow">
-                <h3 className="text-2xl font-montserrat font-semibold mb-4 text-primary">Кейс {i}</h3>
-                <p className="text-foreground/80 mb-4">
-                  Подробное описание успешного проекта по обеспечению безопасности крупного предприятия.
-                  Реализация комплексной системы защиты информации и контроля доступа.
-                </p>
-                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  Читать полностью
-                  <Icon name="ArrowRight" size={16} className="ml-2" />
-                </Button>
+              <Card key={i} className="bg-card border-primary/20 gold-glow overflow-hidden">
+                <div className="h-64 overflow-hidden">
+                  <EditableImage id={`case-${i}-img`} className="h-full" />
+                </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-montserrat font-semibold mb-4 text-primary">
+                    <EditableText id={`case-${i}-title`} />
+                  </h3>
+                  <p className="text-foreground/80 mb-4">
+                    <EditableText id={`case-${i}-desc`} />
+                  </p>
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                    Читать полностью
+                    <Icon name="ArrowRight" size={16} className="ml-2" />
+                  </Button>
+                </div>
               </Card>
             ))}
           </div>
