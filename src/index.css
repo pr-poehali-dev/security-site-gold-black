@@ -81,4 +81,61 @@
   .hover-gold-glow:hover {
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
   }
+
+  .cyber-grid {
+    background-image:
+      linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .hero-bg {
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba(212, 175, 55, 0.15) 0%,
+        transparent 70%
+      ),
+      linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+  }
+
+  .service-card {
+    background: linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.08) 0%,
+      rgba(10, 10, 10, 0.95) 100%
+    );
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(212, 175, 55, 0.8),
+      transparent
+    );
+  }
+
+  .tech-pattern {
+    background-image:
+      radial-gradient(
+        circle at 20% 50%,
+        rgba(212, 175, 55, 0.05) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 50%,
+        rgba(212, 175, 55, 0.05) 0%,
+        transparent 50%
+      );
+  }
 }
